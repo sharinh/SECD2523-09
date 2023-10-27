@@ -5,7 +5,6 @@
 - [P1 Guidlines](#p1-guidelines)
 - [P1 Proposal Item](#p1-proposal-item)
 - [P1 Rubrics](#p1-rubrics)
-- [P1 try]
   - [1. Project Proposal](#1-project-proposal)
   - [2. Database Requirements](#2-database-requirements)
 
