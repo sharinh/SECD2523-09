@@ -134,12 +134,12 @@
   <tr>
     <td>2</td>
     <td>Phase 2</td>
-    <th><a href="main/project/phase%202#project-phase-2" ><img src="project/images/rfp.png" width="24px" height="24px" ></a></th>
+    <th><a href="project/phase%202/README.md#project-phase-2" ><img src="project/images/rfp.png" width="24px" height="24px" ></a></th>
   </tr>
   <tr>
     <td>3</td>
     <td>Phase 3</td>
-    <th><a href="project/phase%203#project-phase-3" ><img src="project/images/rfp.png" width="24px" height="24px" ></a></th>
+    <th><a href="project/phase%203/README.md#project-phase-3" ><img src="project/images/rfp.png" width="24px" height="24px" ></a></th>
   </tr>
 </table>
 
