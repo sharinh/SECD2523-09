@@ -1,4 +1,11 @@
--- LAB 1 SCRIPT
+/*LAB 4 - DML3 SQL SCRIPT
+NAME: AHMAD NABIL BIN AHMAD NAZRIL
+MATRIC NO: B23CS0020
+
+NAME: AQMAR ILHAN BIN MOHAMAD FADZILAH
+MATRIC NO: B23CS0027
+*/
+
 CREATE TABLE inventory_list ( 
     id      VARCHAR2(11) NOT NULL, 
     cost    NUMBER(7,2) NOT NULL, 
@@ -26,6 +33,7 @@ CREATE TABLE price_history (
     itm_number   VARCHAR2(10) NOT NULL, 
     CONSTRAINT price_history_pk PRIMARY KEY ( itm_number, start_date, start_time ), 
     CONSTRAINT price_history_items_fk FOREIGN KEY ( itm_number ) REFERENCES items ( itm_number ) 
+ 
 );
 
 CREATE TABLE sales_representatives ( 
@@ -134,9 +142,7 @@ BEGIN
     ); 
 END;
 /
--- END OF LAB 1 SCRIPT
 
--- LAB 2 SCRIPT
 INSERT INTO inventory_list (id, cost, units) 
 VALUES('il010230124', 2.5, 100);
 
@@ -287,44 +293,140 @@ INSERT INTO teams VALUES('t004', 'Jets', 10, 5);
 
 SELECT * FROM teams;
 
-DELETE FROM teams 
+DELETE FROM teams  
 WHERE id = 't004';
 
 INSERT INTO teams VALUES('t004', 'Jets', 10, 5);
 
 SELECT * FROM teams;
 
-INSERT INTO customers(ctr_number, email, first_name, last_name, phone_number, current_balance, loyalty_card_number)  
+INSERT INTO customers(ctr_number, email, first_name, last_name, phone_number, current_balance, loyalty_card_number)   
 VALUES('c02001', 'brianrog@hootech.com', 'Brian', 'Rogers', '01654564898', -5.00, 'lc4587');
 
 SELECT * FROM customers;
 
-UPDATE customers 
-SET current_balance = 50.00 
+UPDATE customers  
+SET current_balance = 50.00  
 WHERE ctr_number = 'c02001';
 
 SELECT * FROM customers;
 
-SELECT start_date, TO_CHAR (start_time, 'HH24:MI:SS'), price, end_date, TO_CHAR 
-(end_time, 'HH24:MI') 
+SELECT start_date, TO_CHAR (start_time, 'HH24:MI:SS'), price, end_date, TO_CHAR  
+(end_time, 'HH24:MI')  
 FROM price_history;
 
-UPDATE price_history 
-SET end_date = SYSDATE, end_time = SYSDATE 
+UPDATE price_history  
+SET end_date = SYSDATE, end_time = SYSDATE  
 WHERE itm_number = 'im01101048' AND end_date IS NULL;
 
-SELECT start_date, TO_CHAR(start_time, 'HH24:MI:SS'), price, end_date, TO_CHAR(end_time, 'HH24:MI') 
+SELECT start_date, TO_CHAR(start_time, 'HH24:MI:SS'), price, end_date, TO_CHAR(end_time, 'HH24:MI')  
 FROM price_history;
 
-INSERT INTO price_history (start_date, start_time, price, itm_number) 
+INSERT INTO price_history (start_date, start_time, price, itm_number)  
 VALUES (SYSDATE, SYSDATE, 99.99, 'im01101048');
 
-SELECT start_date, TO_CHAR(start_time, 'HH24:MI:SS'), price, end_date, TO_CHAR(end_time, 'HH24:MI') 
+SELECT start_date, TO_CHAR(start_time, 'HH24:MI:SS'), price, end_date, TO_CHAR(end_time, 'HH24:MI')  
 FROM price_history;
 
-DELETE FROM customers_addresses 
+DELETE FROM customers_addresses  
 WHERE address_line_1 = '83 Barrhill Drive';
 
 SELECT * FROM customers_addresses;
 
--- END OF LAB 2 SCRIPT
+SELECT * FROM CUSTOMERS;
+
+SELECT * FROM TEAMS;
+
+SELECT * FROM ITEMS;
+
+SELECT ctr_number, first_name, last_name, email, phone_number FROM CUSTOMERS;
+
+SELECT name, number_of_players FROM teams;
+
+SELECT name, description, category FROM items;
+
+SELECT first_name, last_name, current_balance, ROUND(current_balance/12, 2)  
+FROM customers;
+
+SELECT first_name, last_name, ctr_number, current_balance, current_balance-5  
+FROM customers;
+
+SELECT first_name, last_name, ctr_number, current_balance, current_balance-5  
+FROM customers  
+WHERE current_balance>1;
+
+SELECT first_name AS "First Name", last_name AS "Last Name", current_balance AS "Balance", current_balance/12 AS "Monthly Repayments"  
+FROM customers;
+
+SELECT first_name AS "First Name", last_name AS "Last Name", current_balance AS "Balance", ROUND(current_balance/12) AS "Monthly Repayments"  
+FROM customers;
+
+SELECT first_name AS "First Name", last_name AS "Last Name", current_balance AS "Balance", ROUND(current_balance/12, 2) AS "Monthly Repayments"  
+FROM customers;
+
+SELECT * FROM teams;
+
+SELECT 'The ' || name || ' team has ' || number_of_players ||  
+    ' players and receives a discount of ' || discount || ' percent.' AS "Team Information"  
+FROM teams;
+
+SELECT 'The ' || name || ' team has ' || number_of_players ||  
+    ' players and receives a discount of ' || discount || ' percent.' AS "Team Information"  
+FROM teams;
+
+SELECT * FROM TEAMS;
+
+SELECT name AS "Name", number_of_players AS "Number of Players"  
+FROM teams  
+ORDER BY name ASC;
+
+SELECT name AS "Name", number_of_players AS "Number of Players"  
+FROM teams  
+ORDER BY number_of_players DESC;
+
+SELECT * FROM sales_representatives NATURAL JOIN sales_rep_addresses;
+
+SELECT id, first_name, last_name, address_line_1, address_line_2, city, email, phone_number 
+FROM sales_representatives NATURAL JOIN sales_rep_addresses;
+
+SELECT id, first_name, last_name, address_line_1, address_line_2, city, email, phone_number 
+FROM sales_representatives JOIN sales_rep_addresses 
+USING (id);
+
+SELECT * 
+FROM items JOIN price_history 
+USING (itm_number);
+
+SELECT c.ctr_number, c.first_name, c.last_name, c.phone_number, c.email, s.id, s.first_name, s.last_name, s.email 
+FROM customers c JOIN sales_representatives s 
+ON c.sre_id = s.id;
+
+SELECT ctr_number, c.first_name, c.last_name, c.phone_number, c.email, s.id, 
+s.first_name, s.last_name, s.email, t.name "Team Name" 
+FROM customers c JOIN sales_representatives s 
+ON ( s.id = c.sre_id) JOIN teams t 
+ON (t.id = c.tem_id);
+
+SELECT ctr_number, c.first_name, c.last_name, c.phone_number, c.email, s.id, 
+s.first_name, 
+s.last_name, s.email, t.name "Team Name" 
+FROM customers c JOIN sales_representatives s 
+ON ( s.id = c.sre_id) JOIN teams t 
+ON (t.id = c.tem_id) WHERE c.ctr_number ='c00001';
+
+SELECT 'The cost of the ' || I.NAME || 'on this day was ' || P.PRICE AS "ITEM DETAILS" 
+FROM ITEMS I 
+JOIN PRICE_HISTORY P ON (TO_DATE('12-Dec-2016', 'DD-MM-YYYY') BETWEEN 
+P.START_DATE AND P.END_DATE) 
+WHERE I.ITM_NUMBER = 'im01101045';
+
+SELECT r.first_name|| ' ' || r.last_name AS "Rep", s.first_name||' '|| s.last_name AS "Supervisor" 
+FROM sales_representatives r JOIN sales_representatives s 
+ON (r.supervisor_id = s.id);
+
+SELECT * 
+FROM teams t RIGHT OUTER JOIN customers c 
+ON (t.id = c.tem_id);
+
+SELECT * FROM customers CROSS JOIN sales_representatives;
+
